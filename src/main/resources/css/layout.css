@@ -1,0 +1,25 @@
+/* Root Layout */
+.root {
+    -fx-font-family: 'Inter', sans-serif;
+    -fx-background-color: #f8f9fa;
+}
+
+/* Navigation Box */
+.nav-box {
+    -fx-spacing: 15px;
+    -fx-padding: 20px;
+    -fx-alignment: top-left;
+}
+
+/* Content Area */
+.content-area {
+    -fx-background-color: #f0f0f0;
+    -fx-padding: 20px;
+}
+
+/* Welcome Label */
+.welcome-label {
+    -fx-font-size: 40px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333;
+}

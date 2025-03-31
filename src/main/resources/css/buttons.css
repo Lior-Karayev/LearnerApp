@@ -9,3 +9,11 @@
 .button:hover {
     -fx-background-color: #1E40AF;
 }
+
+.add-subject-btn {
+    -fx-font-size: 16px;
+    -fx-background-color: #2563EB;
+    -fx-text-fill: white;
+    -fx-padding: 10px 20px;
+    -fx-background-radius: 10px;
+}

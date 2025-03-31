@@ -15,7 +15,14 @@ import javafx.stage.Stage;
 
 public class UserDashboard extends Application {
     private StackPane contentArea; // Main content area
-    private ObservableList<Subject> subjectList;
+    private ObservableList<Subject> subjectList = FXCollections.observableArrayList(
+            new Subject("Mathematics", 67, 5, 3),
+            new Subject("Physics", 45, 7, 3),
+            new Subject("Chemistry", 78, 8, 6),
+            new Subject("Biology", 50, 4, 2),
+            new Subject("History", 90, 6, 6),
+            new Subject("Geography", 40, 5, 2)
+    );
 
     @Override
     public void start(Stage primaryStage) {
@@ -23,7 +30,8 @@ public class UserDashboard extends Application {
 
         // Header with welcome label
         Label welcomeLabel = new Label("Welcome, [User Name]!");
-        welcomeLabel.setStyle("-fx-font-size: 40px; -fx-font-weight: bold;");
+//        welcomeLabel.setStyle("-fx-font-size: 40px; -fx-font-weight: bold;");
+        welcomeLabel.getStyleClass().add("welcome-label");
 
         // Logo image for navBox
         Image logoImage = new Image(getClass().getResource("/LogoLarge.png").toExternalForm());
@@ -43,15 +51,14 @@ public class UserDashboard extends Application {
 
         // VBox for navigation buttons
         VBox navBox = new VBox(15, logoView, btnSubjects, btnProgress, btnSettings);
-        navBox.setAlignment(Pos.TOP_LEFT);
-        navBox.setPadding(new Insets(20));
+        navBox.getStyleClass().add("nav-box");
 
         // Main content area
         Label contentLabel = new Label("Select an option from the menu");
         contentLabel.setStyle("-fx-font-size: 16px;");
         contentArea = new StackPane(contentLabel); // Placeholder for dynamic content
         contentArea.setPrefSize(600, 400);
-        contentArea.setStyle("-fx-background-color: #f0f0f0; -fx-padding: 20px;");
+        contentArea.getStyleClass().add("content-area");
 
         // BorderPane layout (Navigation + Content)
         BorderPane root = new BorderPane();
@@ -74,15 +81,6 @@ public class UserDashboard extends Application {
     }
 
     private void showManageSubjects(){
-        subjectList = FXCollections.observableArrayList(
-                new Subject("Mathematics", 67, 5, 3),
-                new Subject("Physics", 45, 7, 3),
-                new Subject("Chemistry", 78, 8, 6),
-                new Subject("Biology", 50, 4, 2),
-                new Subject("History", 90, 6, 6),
-                new Subject("Geography", 40, 5, 2)
-        );
-
         // Create GridPane for subject cards
         GridPane cardGrid = new GridPane();
         cardGrid.setPadding(new Insets(20));
@@ -105,8 +103,8 @@ public class UserDashboard extends Application {
 
         // Button to add subject
         Button btnAddSubject = new Button("+ Add Subject");
-        btnAddSubject.setStyle("-fx-font-size: 16px; -fx-background-color: #2563EB; -fx-text-fill: white;");
         btnAddSubject.setOnAction(e -> showAddSubjectDialog());
+        btnAddSubject.getStyleClass().add("add-subject-btn");
 
         VBox contentBox = new VBox(20, btnAddSubject, cardGrid);
         contentBox.setAlignment(Pos.CENTER);
@@ -118,11 +116,12 @@ public class UserDashboard extends Application {
 
     private VBox createSubjectCard(Subject subject){
         VBox card = new VBox(10);
-        card.setStyle("-fx-border-color: #dcdcdc; -fx-border-radius: 10; -fx-padding: 15; -fx-background-color: white;");
-        card.setPrefSize(250, 100);
+        card.setPrefWidth(Region.USE_COMPUTED_SIZE);
+        card.setMaxWidth(Double.MAX_VALUE);
+        card.getStyleClass().add("subject-card");
 
         Label subjectName = new Label(subject.getName());
-        subjectName.setStyle("-fx-font-size: 18px; -fx-font-weight: bold");
+        subjectName.getStyleClass().add("subject-name");
 
         // Progress bar and progress label
         ProgressBar progressBar = new ProgressBar(subject.getProgress() / 100.0);
@@ -130,7 +129,7 @@ public class UserDashboard extends Application {
 
         Label progressLabel = new Label(subject.getProgress() + "% Completed");
 
-        Label topicInfo = new Label(subject.getTotalTopics() + "Topics | " + subject.getCompletedTopics() + " Completed");
+        Label topicInfo = new Label(subject.getTotalTopics() + " Topics | " + subject.getCompletedTopics() + " Completed");
 
         // Action buttons
         Button btnView = new Button("View Topics");
@@ -138,15 +137,15 @@ public class UserDashboard extends Application {
         btnView.setOnAction(e -> System.out.println("Viewing topics for " + subject.getName()));
 
         Button btnEdit = new Button("Edit");
-        btnView.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white;");
-        btnView.setOnAction(e -> System.out.println("Editing " + subject.getName()));
+        btnEdit.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white;");
+        btnEdit.setOnAction(e -> System.out.println("Editing " + subject.getName()));
 
         Button btnDelete = new Button("Delete");
-        btnView.setStyle("-fx-background-color: #FF4D4D; -fx-text-fill: white;");
-        btnView.setOnAction(e -> deleteSubject(subject));
+        btnDelete.setStyle("-fx-background-color: #FF4D4D; -fx-text-fill: white;");
+        btnDelete.setOnAction(e -> deleteSubject(subject));
 
         HBox buttonBox = new HBox(btnView, btnEdit, btnDelete);
-        buttonBox.setAlignment(Pos.CENTER);
+        buttonBox.getStyleClass().add("button-box");
 
         card.getChildren().addAll(subjectName, progressBar, progressLabel, topicInfo, buttonBox);
         card.setAlignment(Pos.CENTER);
