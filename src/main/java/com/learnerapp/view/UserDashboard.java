@@ -44,6 +44,10 @@ public class UserDashboard extends Application {
         Button btnProgress = new Button("View Progress");
         Button btnSettings = new Button("Settings");
 
+        btnSubjects.getStyleClass().addAll("button", "primary-btn", "btn-small");
+        btnProgress.getStyleClass().addAll("button", "primary-btn", "btn-small");
+        btnSettings.getStyleClass().addAll("button", "primary-btn", "btn-small");
+
         // Style navigation buttons
         btnSubjects.setPrefWidth(150);
         btnProgress.setPrefWidth(150);
@@ -104,7 +108,7 @@ public class UserDashboard extends Application {
         // Button to add subject
         Button btnAddSubject = new Button("+ Add Subject");
         btnAddSubject.setOnAction(e -> showAddSubjectDialog());
-        btnAddSubject.getStyleClass().add("add-subject-btn");
+        btnAddSubject.getStyleClass().addAll("button", "primary-btn", "btn-semi-bold");
 
         VBox contentBox = new VBox(20, btnAddSubject, cardGrid);
         contentBox.setAlignment(Pos.CENTER);
@@ -133,15 +137,15 @@ public class UserDashboard extends Application {
 
         // Action buttons
         Button btnView = new Button("View Topics");
-        btnView.setStyle("-fx-background-color: #2563EB; -fx-text-fill: white;");
+        btnView.getStyleClass().addAll("button", "primary-btn", "btn-small");
         btnView.setOnAction(e -> System.out.println("Viewing topics for " + subject.getName()));
 
         Button btnEdit = new Button("Edit");
-        btnEdit.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white;");
+        btnEdit.getStyleClass().addAll("button", "btn-small", "btn-green");
         btnEdit.setOnAction(e -> System.out.println("Editing " + subject.getName()));
 
         Button btnDelete = new Button("Delete");
-        btnDelete.setStyle("-fx-background-color: #FF4D4D; -fx-text-fill: white;");
+        btnDelete.getStyleClass().addAll("button", "btn-small", "btn-red");
         btnDelete.setOnAction(e -> deleteSubject(subject));
 
         HBox buttonBox = new HBox(btnView, btnEdit, btnDelete);

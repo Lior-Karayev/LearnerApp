@@ -1,19 +1,50 @@
 .button {
-    -fx-background-color: #2563EB;
-    -fx-text-fill: white;
     -fx-padding: 8px 15px;
     -fx-font-size: 14px;
     -fx-background-radius: 5px;
+    -fx-transition: all 0.3s ease-in-out;
+    -fx-font-family: "Inter";
 }
 
-.button:hover {
-    -fx-background-color: #1E40AF;
-}
-
-.add-subject-btn {
+.primary-btn {
     -fx-font-size: 16px;
     -fx-background-color: #2563EB;
     -fx-text-fill: white;
     -fx-padding: 10px 20px;
     -fx-background-radius: 10px;
+}
+
+.primary-btn:hover {
+    -fx-background-color: #1E40AF;
+}
+
+.btn-small {
+    -fx-font-size: 14px;
+}
+
+.btn-bold {
+    -fx-font-weight: bold;
+}
+
+.btn-semi-bold {
+    -fx-font-family: "Inter-Medium";
+    -fx-font-weight: medium;
+}
+
+.btn-green {
+    -fx-text-fill: white;
+    -fx-background-color: #4CAF50;
+}
+
+.btn-green:hover {
+    -fx-background-color: #388E3C; /* Darker green */
+}
+
+.btn-red {
+    -fx-text-fill: white;
+    -fx-background-color: #FF4D4D;
+}
+
+.btn-red:hover {
+    -fx-background-color: #D32F2F; /* Darker red */
 }
