@@ -27,7 +27,7 @@ public class UserDashboard extends Application {
         // Initialize controllers
         subjectController = new SubjectController();
         subjectList = subjectController.getSubjectList();
-        subjectManagementView = new SubjectManagementView(subjectList, subjectController);
+        subjectManagementView = new SubjectManagementView(subjectController);
 
         // Header with welcome label
         Label welcomeLabel = new Label("Welcome, [User Name]!");
@@ -79,7 +79,9 @@ public class UserDashboard extends Application {
 
         // Scene setup
         Scene scene = new Scene(root, 800, 500);
-        scene.getStylesheets().add(getClass().getResource("/css/style.css").toExternalForm());
+        scene.getStylesheets().add(
+            getClass().getResource("/css/style.css").toExternalForm()
+        );
 
         primaryStage.setTitle("User Dashboard - LearnerApp");
         primaryStage.setScene(scene);
@@ -87,7 +89,7 @@ public class UserDashboard extends Application {
     }
 
     private void showManageSubjects() {
-        contentArea.getChildren().setAll(subjectManagementView.getView());
+        contentArea.getChildren().setAll(subjectManagementView);
     }
 
     private void showInitialMessage() {

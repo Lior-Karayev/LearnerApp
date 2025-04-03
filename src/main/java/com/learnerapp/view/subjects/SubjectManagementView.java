@@ -2,72 +2,84 @@ package com.learnerapp.view.subjects;
 
 import com.learnerapp.controller.SubjectController;
 import com.learnerapp.model.Subject;
-import javafx.collections.ObservableList;
+import org.kordamp.ikonli.javafx.FontIcon;
+import org.kordamp.ikonli.fontawesome5.FontAwesomeSolid;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
-public class SubjectManagementView {
-    private final VBox contentBox;
-    private final ObservableList<Subject> subjectList;
+public class SubjectManagementView extends VBox {
     private final SubjectController subjectController;
-    private GridPane cardGrid;
+    private final GridPane subjectsGrid;
 
-    public SubjectManagementView(ObservableList<Subject> subjectList, SubjectController subjectController) {
-        this.subjectList = subjectList;
+    public SubjectManagementView(SubjectController subjectController) {
         this.subjectController = subjectController;
-        this.contentBox = new VBox(20);
-        this.contentBox.setAlignment(Pos.CENTER);
-        this.contentBox.setPadding(new Insets(20));
+        this.subjectsGrid = new GridPane();
         
+        setSpacing(20);
+        setPadding(new Insets(20));
+        getStyleClass().add("subject-management-view");
+
         initializeView();
-    }
-
-    private void initializeView() {
-        // Create GridPane for subject cards
-        cardGrid = new GridPane();
-        cardGrid.setPadding(new Insets(20));
-        cardGrid.setHgap(20);
-        cardGrid.setVgap(20);
-        cardGrid.setAlignment(Pos.CENTER);
-
-        // Button to add subject
-        Button btnAddSubject = new Button("+ Add Subject");
-        btnAddSubject.setOnAction(e -> showAddSubjectDialog());
-        btnAddSubject.getStyleClass().addAll("button", "primary-btn", "btn-semi-bold");
-
-        contentBox.getChildren().addAll(btnAddSubject, cardGrid);
-        
         refreshSubjects();
     }
 
-    public void refreshSubjects() {
-        // Clear existing cards
-        cardGrid.getChildren().clear();
+    private void initializeView() {
+        // Header
+        HBox header = new HBox(10);
+        header.setAlignment(Pos.CENTER_LEFT);
+        header.getStyleClass().add("header");
 
-        // Add subject cards to grid
-        int column = 0;
-        int row = 0;
-        for(Subject subject: subjectList) {
-            SubjectCard card = new SubjectCard(subject, subjectController, this);
-            cardGrid.add(card, column, row);
-            column++;
-            if(column == 3) {
-                column = 0;
-                row++;
-            }
-        }
+        Label title = new Label("Subject Management");
+        title.getStyleClass().add("title");
+
+        FontIcon addIcon = new FontIcon(FontAwesomeSolid.PLUS);
+        addIcon.setIconSize(16);
+        addIcon.setIconColor(javafx.scene.paint.Color.WHITE);
+
+        Button addButton = new Button("Add Subject", addIcon);
+        addButton.getStyleClass().addAll("button", "primary-btn");
+        addButton.setOnAction(e -> showAddSubjectDialog());
+
+        header.getChildren().addAll(title, addButton);
+
+        // Subjects grid
+        subjectsGrid.setHgap(20);
+        subjectsGrid.setVgap(20);
+        subjectsGrid.setAlignment(Pos.TOP_CENTER);
+
+        ScrollPane scrollPane = new ScrollPane(subjectsGrid);
+        scrollPane.setFitToWidth(true);
+        scrollPane.setFitToHeight(true);
+        scrollPane.getStyleClass().add("scroll-pane");
+
+        getChildren().addAll(header, scrollPane);
     }
 
     private void showAddSubjectDialog() {
         AddSubjectDialog dialog = new AddSubjectDialog(subjectController);
-        dialog.showAndWait();
-        refreshSubjects(); // Refresh after adding a subject
+        dialog.showAndWait().ifPresent(subject -> {
+            subjectController.addSubject(subject);
+            refreshSubjects();
+        });
     }
 
-    public VBox getView() {
-        return contentBox;
+    public void refreshSubjects() {
+        subjectsGrid.getChildren().clear();
+        int column = 0;
+        int row = 0;
+        for (Subject subject : subjectController.getSubjectList()) {
+            subjectsGrid.add(new SubjectCard(subject, subjectController, this), column, row);
+            column++;
+            if (column == 3) {
+                column = 0;
+                row++;
+            }
+        }
     }
 }

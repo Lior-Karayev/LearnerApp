@@ -4,6 +4,7 @@
     -fx-background-radius: 5px;
     -fx-transition: all 0.3s ease-in-out;
     -fx-font-family: "Inter";
+    -fx-cursor: hand;
 }
 
 .primary-btn {
@@ -18,9 +19,13 @@
     -fx-background-color: #1E40AF;
 }
 
+/* Button sizes */
+
 .btn-small {
     -fx-font-size: 14px;
 }
+
+/* Button weights */
 
 .btn-bold {
     -fx-font-weight: bold;
@@ -30,6 +35,8 @@
     -fx-font-family: "Inter-Medium";
     -fx-font-weight: medium;
 }
+
+/* Button Colors */
 
 .btn-green {
     -fx-text-fill: white;
@@ -48,3 +55,14 @@
 .btn-red:hover {
     -fx-background-color: #D32F2F; /* Darker red */
 }
+
+.btn-disabled {
+    -fx-background-color: #E0E0E0;
+    -fx-text-fill: #808080;
+    -fx-cursor: default;
+}
+
+.btn-disabled:hover {
+    -fx-background-color: #E0E0E0;
+}
+
